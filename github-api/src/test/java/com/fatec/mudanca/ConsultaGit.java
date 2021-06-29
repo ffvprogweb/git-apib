@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.fatec.mudanca.service.ConsultaAPI;
+//https://docs.github.com/en/rest/reference/repos#statuses
 @SpringBootTest
 class ConsultaGit {
 	Logger logger = LogManager.getLogger(ConsultaAPI.class);
@@ -22,7 +23,7 @@ class ConsultaGit {
 	void test() throws Exception {
 		
 		ResponseEntity<String> result = consulta.consulta();
-		String repositorios = result.getBody().toString();
+		String repositorios = result.getBody();
 		System.out.println(repositorios.toString());
 		logger.info(">>>>>>executou teste 1");
 		assertFalse(repositorios.isEmpty());
@@ -34,6 +35,7 @@ class ConsultaGit {
 	void test2() throws Exception {
 	
 		RestTemplate template = new RestTemplate();
+		//https://api.github.com/repos/ffvprogweb/20201s_scel_prog_web/stats/commit_activity
 		String url = "https://api.github.com/repos/ffvprogweb/tssscelrestci/stats/commit_activity";
 		String result = template.getForObject(url, String.class);
 //		logger.info(">>>>>> 3. obtem endereco ==> " + endereco.toString());
