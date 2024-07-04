@@ -31,13 +31,15 @@ public class GitHubService {
         String owner = parts[parts.length - 2];
         String repo = parts[parts.length - 1];
         String apiUrl = String.format("https://api.github.com/repos/%s/%s/commits", owner, repo);
-
+        
         Commit[] commits = restTemplate.getForObject(apiUrl, Commit[].class);
 
         return Arrays.stream(commits)
                 .map(commit -> new CommitDetails(
                         commit.getCommitDetails().getMessage(),
-                        formatDate(commit.getCommitDetails().getAuthor().getDate())
+                        formatDate(commit.getCommitDetails().getAuthor().getDate()),
+                        commit.getCommitDetails().getAuthor().getName()
+                        
                 ))
                 .collect(Collectors.toList());
     }

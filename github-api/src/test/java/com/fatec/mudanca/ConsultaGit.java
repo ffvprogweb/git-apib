@@ -24,8 +24,11 @@ class ConsultaGit {
 	@Test
 	void consultaCommits(){
 		GitHubService git = new GitHubService();
-		List<CommitDetails> commitsRetornados = git.getCommits("https://github.com/ffvprogweb/ads2-cap07-sigvs");
-		logger.info(">>>>>> 4. obtem a mensagem ==> " + commitsRetornados.get(0).toString());
-		commitsRetornados.forEach(message -> System.out.println("Data do commit=> " +  message.getDate() + " Msg: " + message.getMessage()));
+		List<CommitDetails> commitsRetornados = git.getCommits("https://github.com/ffvprogweb/dsm-cap05-backend");
+		
+		commitsRetornados.forEach(message -> System.out.println("Data do commit=> " +  message.getDate() 
+		                                                      + " Msg: " + message.getMessage()
+		                                                      + " \t Nome: " + message.getName()));
+		
 	}
 }

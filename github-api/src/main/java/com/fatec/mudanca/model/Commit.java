@@ -46,6 +46,8 @@ public class Commit {
         public static class Author {
             @JsonProperty("date")
             private String date;
+            @JsonProperty("name")
+            private String name;
 
             public String getDate() {
                 return date;
@@ -53,6 +55,13 @@ public class Commit {
 
             public void setDate(String date) {
                 this.date = date;
+            }
+            
+            public void setName(String name) {
+            	this.name = name;
+            }
+            public String getName() {
+            	return name;
             }
         }
     }
