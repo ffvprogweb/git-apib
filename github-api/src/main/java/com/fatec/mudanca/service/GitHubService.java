@@ -7,9 +7,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -30,15 +31,18 @@ public class GitHubService {
 	}
 
 	public List<CommitDetails> getCommits(String repoUrl) {
-		String[] parts = repoUrl.split("/");
-		String owner = parts[parts.length - 2];
-		String repo = parts[parts.length - 1];
-		String apiUrl = String.format("https://api.github.com/repos/%s/%s/commits", owner, repo);
+		
 	
 		try {
-			Commit[] commits = restTemplate.getForObject(apiUrl, Commit[].class);
-
-			return Arrays.stream(commits)
+			String[] parts = repoUrl.split("/");
+			String owner = parts[parts.length - 2];
+			String repo = parts[parts.length - 1];
+			String apiUrl = String.format("https://api.github.com/repos/%s/%s/commits", owner, repo);
+			RestTemplate restTemplate = new RestTemplate();
+			//ResponseEntity<Commit[]> commits = restTemplate.getForEntity(apiUrl, Commit[].class); 
+			//Commit[] commits = restTemplate.getForObject(apiUrl, Commit[].class);
+			ResponseEntity<Commit[]> commits = restTemplate.exchange(apiUrl, HttpMethod.GET,null, Commit[].class); 
+			return Arrays.stream(commits.getBody())
 					.map(commit -> new CommitDetails(commit.getCommitDetails().getMessage(),
 							formatDate(commit.getCommitDetails().getAuthor().getDate()),
 							commit.getCommitDetails().getAuthor().getName()
