@@ -1,5 +1,4 @@
 name: "deploy em pre-producao"
-
 on: [push]
 
 jobs:
